@@ -3,11 +3,12 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-testpath.spec)
 
 Summary:	Test utilities for code working with files and commands
 Summary(pl.UTF-8):	Narzędzia testowe dla kodu działającego na plikach i poleceniach
 Name:		python-testpath
+# keep 0.4.x here for python2 support
 Version:	0.4.4
 Release:	2
 License:	BSD
@@ -32,7 +33,7 @@ BuildRequires:	python3-pytest
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	sphinx-pdg
+BuildRequires:	sphinx-pdg-2
 %endif
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
@@ -93,6 +94,7 @@ Dokumentacja API modułu Pythona testpath.
 %py_build
 
 %if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python} -m pytest tests
 %endif
 %endif
@@ -101,12 +103,14 @@ Dokumentacja API modułu Pythona testpath.
 %py3_build
 
 %if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python3} -m pytest tests
 %endif
 %endif
 
 %if %{with doc}
-%{__make} -C doc html
+%{__make} -C doc html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
