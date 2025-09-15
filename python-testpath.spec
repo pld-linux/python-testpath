@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	Narzędzia testowe dla kodu działającego na plikach i polec
 Name:		python-testpath
 # keep 0.4.x here for python2 support
 Version:	0.4.4
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/testpath/
